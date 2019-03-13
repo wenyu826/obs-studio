@@ -37,7 +37,7 @@ OBSBasicAdvAudio::OBSBasicAdvAudio(QWidget *parent)
 	label = new QLabel(QTStr("Basic.AdvAudio.Mono"));
 	label->setAlignment(Qt::AlignHCenter);
 	mainLayout->addWidget(label, 0, idx++);
-	label = new QLabel(QTStr("Basic.AdvAudio.Panning"));
+	label = new QLabel(QTStr("Basic.AdvAudio.Balance"));
 	label->setAlignment(Qt::AlignHCenter);
 	mainLayout->addWidget(label, 0, idx++);
 	label = new QLabel(QTStr("Basic.AdvAudio.SyncOffset"));
@@ -89,6 +89,7 @@ OBSBasicAdvAudio::OBSBasicAdvAudio(QWidget *parent)
 
 	resize(1000, 340);
 	setWindowTitle(QTStr("Basic.AdvAudio"));
+	setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 	setSizeGripEnabled(true);
 	setWindowModality(Qt::NonModal);
 	setAttribute(Qt::WA_DeleteOnClose, true);

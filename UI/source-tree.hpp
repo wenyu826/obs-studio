@@ -47,6 +47,7 @@ class SourceTreeItem : public QWidget {
 
 public:
 	explicit SourceTreeItem(SourceTree *tree, OBSSceneItem sceneitem);
+	bool IsEditing();
 
 private:
 	QSpacerItem *spacer = nullptr;
@@ -62,11 +63,17 @@ private:
 	OBSSceneItem sceneitem;
 	OBSSignal sceneRemoveSignal;
 	OBSSignal itemRemoveSignal;
+	OBSSignal groupReorderSignal;
+	OBSSignal deselectSignal;
 	OBSSignal visibleSignal;
 	OBSSignal renameSignal;
 	OBSSignal removeSignal;
 
+	virtual void paintEvent(QPaintEvent* event) override;
+
 private slots:
+	void Clear();
+
 	void EnterEditMode();
 	void ExitEditMode(bool save);
 
@@ -74,6 +81,8 @@ private slots:
 	void Renamed(const QString &name);
 
 	void ExpandClicked(bool checked);
+
+	void Deselect();
 };
 
 class SourceTreeModel : public QAbstractListModel {
@@ -133,21 +142,19 @@ class SourceTree : public QListView {
 		return reinterpret_cast<SourceTreeModel *>(model());
 	}
 
+public:
 	inline SourceTreeItem *GetItemWidget(int idx)
 	{
 		QWidget *widget = indexWidget(GetStm()->createIndex(idx, 0));
 		return reinterpret_cast<SourceTreeItem *>(widget);
 	}
 
-public:
 	explicit SourceTree(QWidget *parent = nullptr);
 
 	inline bool IgnoreReorder() const {return ignoreReorder;}
-	inline void ReorderItems() {GetStm()->ReorderItems();}
 	inline void Clear() {GetStm()->Clear();}
 
 	inline void Add(obs_sceneitem_t *item) {GetStm()->Add(item);}
-	inline void Remove(obs_sceneitem_t *item) {GetStm()->Remove(item);}
 	inline OBSSceneItem Get(int idx) {return GetStm()->Get(idx);}
 	inline QString GetNewGroupName() {return GetStm()->GetNewGroupName();}
 
@@ -158,6 +165,8 @@ public:
 	bool GroupedItemsSelected() const;
 
 public slots:
+	inline void ReorderItems() {GetStm()->ReorderItems();}
+	void Remove(OBSSceneItem item);
 	void GroupSelectedItems();
 	void UngroupSelectedGroups();
 	void AddGroup();
@@ -166,6 +175,8 @@ public slots:
 protected:
 	virtual void mouseDoubleClickEvent(QMouseEvent *event) override;
 	virtual void dropEvent(QDropEvent *event) override;
+	virtual void mouseMoveEvent(QMouseEvent *event) override;
+	virtual void leaveEvent(QEvent *event) override;
 
 	virtual void selectionChanged(const QItemSelection &selected, const QItemSelection &deselected) override;
 };

@@ -1,3 +1,37 @@
+/* OBSTheme, main QApplication palette and QML values */
+OBSTheme {
+    window: #181819;
+    windowText: rgb(225,224,225);
+    base: rgb(18,18,21);
+    alternateBase: rgb(0,0,0);
+    text: rgb(225,224,225);
+    button: #162458;
+    buttonText: rgb(225,224,225);
+    brightText: #484848;
+
+    light: #162458;
+    mid: #181819;
+    dark: rgb(18,18,21);
+    shadow: rgb(0,0,0);
+
+    highlight: #252458;
+    highlightText: #FFFFFF;
+
+    link: #605ee6;
+    linkVisited: #605ee6;
+}
+
+OBSTheme::disabled {
+    text: #484848;
+    buttonText: #484848;
+    brightText: #484848;
+}
+
+OBSTheme::inactive {
+    highlight: rgb(48,47,48);
+    highlightText: rgb(255, 255, 255);
+}
+
 /* General style, we override only what is needed. */
 QWidget {
 	background-color: #181819;
@@ -8,7 +42,7 @@ QWidget {
 	outline: none;
 	font-family: "Open Sans", "Tahoma", "Arial", sans-serif;
 	font-size: 12px;
-	padding: 4px;
+	overflow: auto;
 }
 
 #menubar {
@@ -21,6 +55,7 @@ QLabel:link {
 
 QMenu {
 	border: 1px solid #333336;
+	padding: 4px;
 }
 
 * [frameShape="1"], * [frameShape="2"], * [frameShape="3"], * [frameShape="4"], * [frameShape="5"], * [frameShape="6"] {
@@ -43,6 +78,14 @@ QSizeGrip {
 
 QWidget::disabled {
 	color: #484848;
+}
+
+* [themeID="error"] {
+	color: #d91740;
+}
+
+* [themeID="warning"] {
+	color: #d9af17;
 }
 
 /* Dropdown menus, Scenes box, Sources box */
@@ -113,7 +156,7 @@ QListWidget QLineEdit {
 
 /* Dock stuff */
 QDockWidget {
-	background: transparent;
+	background: #181819;
 	border: none;
 	font-size: 14px;
 	font-weight: bold;
@@ -217,6 +260,7 @@ QScrollBar:vertical {
 	width: 20px;
 	margin-top: -3px;
 	margin-bottom: -3px;
+	padding: 4px;
 }
 
 QScrollBar::handle:vertical {
@@ -230,6 +274,7 @@ QScrollBar::handle:vertical {
 QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
 	border: none;
 	background: none;
+	height: 0;
 }
 
 QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical, QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
@@ -240,15 +285,16 @@ QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical, QScrollBar::add-
 
 QScrollBar:horizontal {
 	background-color: transparent;
-	height: 10px;
+	height: 20px;
 	margin-left: -3px;
 	margin-right: -3px;
+	padding: 4px;
 }
 
 QScrollBar::handle:horizontal {
 	background-color: #2f2f2f;
 	min-width: 20px;
-	margin: 0px 0px -3px;
+	margin: 3px 0px;
 	border-radius: 0px;
 	border: none;
 }
@@ -256,6 +302,7 @@ QScrollBar::handle:horizontal {
 QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal {
 	border: none;
 	background: none;
+	width: 0;
 }
 
 QScrollBar::left-arrow:horizontal, QScrollBar::right-arrow:horizontal, QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
@@ -391,6 +438,7 @@ QComboBox::down-arrow:editable {
 QLineEdit, QTextEdit, QPlainTextEdit {
 	background-color: rgb(8,8,11);
 	border: none;
+	padding: 4px;
 	padding-left: 2px;
 }
 
@@ -399,6 +447,7 @@ QLineEdit, QTextEdit, QPlainTextEdit {
 QSpinBox, QDoubleSpinBox {
 	background-color: rgb(8,8,11);
 	border: none;
+	padding: 4px;
 	padding-left: 2px;
 	padding-right: 15px;
 	margin-right: 10px;
@@ -468,10 +517,12 @@ QPushButton {
 
 QPushButton::flat {
 	background-color: rgb(24,24,25);
+	border: none;
 }
 
 QPushButton:checked {
-	background-color: #202b52;
+	background-color: #581624;
+	border-color: #84162d;
 }
 
 QPushButton:hover {
@@ -481,6 +532,16 @@ QPushButton:hover {
 
 QPushButton:pressed {
 	background-color: #161f41;
+}
+
+QPushButton:disabled {
+	border: 1px solid #232426;
+	background-color: #1a1a1b;
+}
+
+QPushButton::flat:hover,
+QPushButton::flat:disabled {
+	border: none;
 }
 
 /* Progress Bar */
@@ -617,6 +678,10 @@ QStatusBar::item {
 }
 
 /* Checkboxes */
+QCheckBox {
+	padding: 4px;
+}
+
 QCheckBox::indicator,
 QGroupBox::indicator {
 	width: 20px;
@@ -796,13 +861,6 @@ FocusList::item {
 	padding: 0px 2px;
 }
 
-#transitionsContainer QPushButton,
-#mixerDock QPushButton,
-#effectWidget QPushButton,
-#asyncWidget QPushButton {
-	border: none;
-}
-
 #fpsTypes {
 	padding: 0px;
 }
@@ -811,4 +869,61 @@ FocusList::item {
 	padding: -2px 0px;
 	background: transparent;
 	min-height: 26px;
+}
+
+/* About dialog */
+
+#OBSAbout #icon {
+	padding: 0;
+}
+
+#OBSAbout QTextBrowser {
+	background: transparent;
+	padding: 2px 0;
+}
+
+* [themeID="aboutName"] {
+	font-size: 36px;
+	font-weight: bold;
+	padding: 0;
+}
+
+* [themeID="aboutVersion"] {
+	font-size: 16px;
+	margin-bottom: 20px;
+	padding: 0;
+}
+
+* [themeID="aboutInfo"] {
+	margin-bottom: 20px;
+}
+
+* [themeID="aboutHLayout"] {
+	background-color: rgb(8, 8, 11);
+}
+
+/* Preview background color */
+
+* [themeID="displayBackgroundColor"] {
+    qproperty-displayBackgroundColor: #28282A;
+}
+
+/* Preview/Program labels */
+
+* [themeID="previewProgramLabels"] {
+	font-size: 18px;
+	font-weight: bold;
+	color: rgb(122,121,122);
+}
+
+/* Settings Icons */
+
+OBSBasicSettings {
+    qproperty-generalIcon: url(./Dark/settings/general.svg);
+    qproperty-streamIcon: url(./Dark/settings/stream.svg);
+    qproperty-outputIcon: url(./Dark/settings/output.svg);
+    qproperty-audioIcon: url(./Dark/settings/audio.svg);
+    qproperty-videoIcon: url(./Dark/settings/video.svg);
+    qproperty-hotkeysIcon: url(./Dark/settings/hotkeys.svg);
+    qproperty-advancedIcon: url(./Dark/settings/advanced.svg);
 }

@@ -5,6 +5,10 @@
 
 OBS_DECLARE_MODULE()
 OBS_MODULE_USE_DEFAULT_LOCALE("win-capture", "en-US")
+MODULE_EXPORT const char *obs_module_description(void)
+{
+	return "Windows game/screen/window capture";
+}
 
 extern struct obs_source_info duplicator_capture_info;
 extern struct obs_source_info monitor_capture_info;
@@ -25,6 +29,8 @@ extern bool load_graphics_offsets(bool is32bit, const char *config_path);
 #define IS32BIT true
 #endif
 
+/* note, need to enable cache writing in load-graphics-offsets.c if you turn
+ * this back on*/
 #define USE_HOOK_ADDRESS_CACHE false
 
 static DWORD WINAPI init_hooks(LPVOID param)
